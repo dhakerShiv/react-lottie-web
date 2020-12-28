@@ -4,7 +4,7 @@
   "description": "Initial publish",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dhakerShiv/react-lottie-web.git"
+    "url": "https://github.com/dhakerShiv/react-lottie-web.git"
   },
   "keywords": [
     "lottie",
