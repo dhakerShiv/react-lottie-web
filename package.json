@@ -1,12 +1,25 @@
 {
-  "name": "react-lottie",
-  "version": "1.2.3",
-  "description": "lottie animation view for React",
+  "name": "react-lottie-web",
+  "version": "0.1.0",
+  "description": "Initial publish",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenqingspring/react-lottie"
+    "url": "git+https://github.com/dhakerShiv/react-lottie-web.git"
   },
-  "license": "MIT",
+  "keywords": [
+    "lottie",
+    "react",
+    "lottie",
+    "web",
+    "lottie",
+    "web"
+  ],
+  "author": "Shivnarayan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhakerShiv/react-lottie-web/issues"
+  },
+  "homepage": "https://github.com/dhakerShiv/react-lottie-web#readme",
   "scripts": {
     "release": "git add package.json && git commit -m 'chore: bump version number' && standard-version --first-release && git push --follow-tags origin master && npm publish",
     "prepublish": ". ./.scripts/prepublish.sh",

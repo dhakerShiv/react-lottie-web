@@ -1,2 +1,4 @@
 src
 .babelrc
+.npmrc
+/node_modules/
