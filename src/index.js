@@ -56,6 +56,7 @@ export default class Lottie extends React.Component {
     this.pause();
     this.setSpeed();
     this.setDirection();
+    this.updateText(this.props.updateTextData);
   }
 
   componentWillUnmount() {
@@ -118,6 +119,15 @@ export default class Lottie extends React.Component {
       this.anim.pause();
     }
   }
+
+  updateText = (textData) => {
+    let element;
+
+    textData.forEach(({ elementIndex = 0, frameIndex = 0, config }) => {
+      element = this.anim.renderer.elements[elementIndex];
+      element.updateDocumentData(config, frameIndex);
+    });
+  };
 
   render() {
     const {
