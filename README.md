@@ -1,6 +1,9 @@
-# Lottie Animation View for React ([Angular](https://github.com/chenqingspring/ng-lottie), [Vue](https://github.com/chenqingspring/vue-lottie))
+# Lottie Animation View for React
 
 [![npm version](https://badge.fury.io/js/react-lottie.svg)](http://badge.fury.io/js/react-lottie)
+
+## What's new
+Added ```lottiRef``` as new param to fully control lottie animation, you can use any [lottie-web](https://github.com/airbnb/lottie-web) methods on it.
 
 ## Demo
 https://chenqingspring.github.io/react-lottie

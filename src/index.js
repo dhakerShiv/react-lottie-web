@@ -31,6 +31,10 @@ export default class Lottie extends React.Component {
 
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
+
+    if (this.props.lottiRef.current !== this.anim) {
+      this.props.lottiRef.current = this.anim;
+    }
   }
 
   componentWillUpdate(nextProps /* , nextState */) {
@@ -41,6 +45,10 @@ export default class Lottie extends React.Component {
       this.options = {...this.options, ...nextProps.options};
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
+
+      if (this.props.lottiRef.current !== this.anim) {
+        this.props.lottiRef.current = this.anim;
+      }
     }
   }
 
@@ -64,6 +72,7 @@ export default class Lottie extends React.Component {
     this.destroy();
     this.options.animationData = null;
     this.anim = null;
+    this.props.lottiRef.current = null;
   }
 
   setSpeed() {
