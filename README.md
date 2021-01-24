@@ -33,12 +33,12 @@ npm install --save react-web-lottie
 
 ## Usage
 
-Import pinjump.json.json as animation data
+Import animation.json as animation data
 
 ```jsx
 import React from 'react'
 import Lottie from 'react-web-lottie';
-import * as animationData from './yourFile.json'
+import * as animationData from './animation.json'
 
 export default class LottieControl extends React.Component {
 
@@ -57,11 +57,12 @@ export default class LottieControl extends React.Component {
     // Play a particular segment form animation by providing starting and ending frame number
     this.animationRef.current.playSegments([[140, 145]], true);
 
-    let element,
-      elementIndex = 4, // Layer number from JSON file
-      frameIndex = 0;
+    let 
+      element,
+      layerIndex = 4, // Layer number from JSON file
+      frameIndex = 0; // frame in a layer
 
-    element = this.animationRef.current.renderer.elements[elementIndex];
+    element = this.animationRef.current.renderer.elements[layerIndex];
     element.updateDocumentData({ t: text, s: 40 }, frameIndex); // s is font size
   };
 

@@ -64,7 +64,10 @@ export default class Lottie extends React.Component {
     this.pause();
     this.setSpeed();
     this.setDirection();
-    this.updateText(this.props.updateTextData);
+
+    if (this.props.updateTextData) {
+      this.updateText(this.props.updateTextData);
+    }
   }
 
   componentWillUnmount() {
