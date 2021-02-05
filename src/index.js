@@ -5,6 +5,7 @@ import lottie from 'lottie-web';
 export default class Lottie extends React.Component {
   componentDidMount() {
     const {
+      lottiRef,
       options,
       eventListeners,
     } = this.props;
@@ -32,8 +33,8 @@ export default class Lottie extends React.Component {
     this.anim = lottie.loadAnimation(this.options);
     this.registerEvents(eventListeners);
 
-    if (this.props.lottiRef.current !== this.anim) {
-      this.props.lottiRef.current = this.anim;
+    if (lottiRef !== null && typeof lottiRef === 'object' && lottiRef.current !== this.anim) {
+      lottiRef.current = this.anim;
     }
   }
 
@@ -42,11 +43,11 @@ export default class Lottie extends React.Component {
     if (this.options.animationData !== nextProps.options.animationData) {
       this.deRegisterEvents(this.props.eventListeners);
       this.destroy();
-      this.options = {...this.options, ...nextProps.options};
+      this.options = { ...this.options, ...nextProps.options };
       this.anim = lottie.loadAnimation(this.options);
       this.registerEvents(nextProps.eventListeners);
 
-      if (this.props.lottiRef.current !== this.anim) {
+      if (this.props.lottiRef !== null && typeof this.props.lottiRef === 'object' && this.props.lottiRef.current !== this.anim) {
         this.props.lottiRef.current = this.anim;
       }
     }
@@ -64,10 +65,6 @@ export default class Lottie extends React.Component {
     this.pause();
     this.setSpeed();
     this.setDirection();
-
-    if (this.props.updateTextData) {
-      this.updateText(this.props.updateTextData);
-    }
   }
 
   componentWillUnmount() {
@@ -131,15 +128,6 @@ export default class Lottie extends React.Component {
       this.anim.pause();
     }
   }
-
-  updateText = (textData) => {
-    let element;
-
-    textData.forEach(({ elementIndex = 0, frameIndex = 0, config }) => {
-      element = this.anim.renderer.elements[elementIndex];
-      element.updateDocumentData(config, frameIndex);
-    });
-  };
 
   render() {
     const {
@@ -207,6 +195,7 @@ Lottie.propTypes = {
   isClickToPauseDisabled: PropTypes.bool,
   title: PropTypes.string,
   style: PropTypes.string,
+  lottiRef: PropTypes.object,
 };
 
 Lottie.defaultProps = {

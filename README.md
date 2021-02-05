@@ -33,79 +33,109 @@ npm install --save react-web-lottie
 
 ## Usage
 
-Import animation.json as animation data
+Basic example
 
 ```jsx
-import React from 'react'
-import Lottie from 'react-web-lottie';
-import * as animationData from './animation.json'
+import React, { useRef } from "react";
+import LottieDemo from "react-web-lottie";
+import animationData from "./animation.json";
 
-export default class LottieControl extends React.Component {
+export default function Animation() {
+  const animationRef = useRef(null);
 
-  constructor(props) {
-    super(props);
-    this.state = {isStopped: false, isPaused: false};
-    this.animationRef = React.createRef();
-  }
-
-  /*
-    Update text dynamically
-    to make it work,
-    you need to deselect glyphs option while exporting JSON from After effects
-  */
-  setInputData = (text) => {
-    // Play a particular segment form animation by providing starting and ending frame number
-    this.animationRef.current.playSegments([[140, 145]], true);
-
-    let 
-      element,
-      layerIndex = 4, // Layer number from JSON file
-      frameIndex = 0; // frame in a layer
-
-    element = this.animationRef.current.renderer.elements[layerIndex];
-    element.updateDocumentData({ t: text, s: 40 }, frameIndex); // s is font size
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
   };
 
-  render() {
-    const buttonStyle = {
-      display: 'block',
-      margin: '10px auto'
-    };
+  return (
+    <LottieDemo
+      lottiRef={animationRef}
+      width={600}
+      height={500}
+      options={defaultOptions}
+      isClickToPauseDisabled={true}
+    />
+  );
+}
+```
 
-    const defaultOptions = {
-      loop: true,
-      autoplay: true, 
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
+Update text dynamically
 
-    return <div>
-      <Lottie 
-        options={defaultOptions}
-        height={400}
-        width={400}
-        isStopped={this.state.isStopped}
-        isPaused={this.state.isPaused}
-        isClickToPauseDisabled={true}
-        lottiRef={animationRef}
-      />
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: true})}>stop</button>
-      <button style={buttonStyle} onClick={() => this.setState({isStopped: false})}>play</button>
-      <button style={buttonStyle} onClick={() => this.setState({isPaused: !this.state.isPaused})}>pause</button>
+Note: you need to deselect glyphs option while exporting JSON from After effects to make it work.
 
+App.js
+
+```jsx
+import React, { useState } from "react";
+import Animation from "./Animation.js";
+
+export default function App() {
+  const [email, setEmail] = useState("");
+
+  return (
+    <React.Fragment>
       <div>
+        Email
         <input
           type="text"
           height="100"
-          onKeyUp={(event) => setInputData(event.target.value)} // you need to deselect glyphs option while exporting JSON from After effects
+          onKeyUp={(event) => setEmail(event.target.value)}
         />
       </div>
-    </div>
-  }
+      <Animation email={email} />
+    </React.Fragment>
+  );
 }
+```
 
+Animation.js
+
+```jsx
+import React, { useRef, useEffect } from "react";
+import LottieDemo from "react-web-lottie";
+import animationData from "./animation.json";
+
+export default function Animation({ email = "" }) {
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    // Update according to you [startFrame, endFrame]
+    animationRef.current.playSegments([89, 90], true);
+    let element,
+      elementIndex = 1, // Layer number from your json
+      frameIndex = 0; // frame index in your layer, mostly it will be 0 only
+
+    // Below part depends on how lotti animation has been created in after effects
+    element = this.animationRef.current.renderer.elements[layerIndex];
+    element.updateDocumentData({ t: email }, frameIndex);
+  }, [email]);
+
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: animationData,
+    // Change below one as you need, you can even remove it if you do not need
+    initialSegment: [0, 90], // [startFrame, endFrame]
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  return (
+    <LottieDemo
+      width={800}
+      height={500}
+      lottiRef={animationRef}
+      options={defaultOptions}
+      isClickToPauseDisabled={true}
+    />
+  );
+}
 ```
 
 ### props
